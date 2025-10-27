@@ -1,0 +1,9 @@
+body { font-family: Arial, sans-serif; padding: 20px; background:#f0f0f0; }
+h1 { color:#333; }
+table { width:100%; border-collapse: collapse; margin-top: 20px; }
+table th, table td { padding: 8px; text-align:left; }
+table tr:nth-child(even) { background:#eee; }
+.dashboard { margin-bottom:20px; }
+.filtros { margin-bottom:20px; }
+button { background:#4CAF50; color:white; border:none; padding:5px 10px; cursor:pointer; }
+button:hover { background:#45a049; }
