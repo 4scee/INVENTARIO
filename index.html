@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Inventario Web</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Inventario Web</h1>
+
+<div class="dashboard">
+  <p>Total Productos: {{ total_prod }}</p>
+  <p>Valor Total Inventario: ${{ total_valor }}</p>
+  <p style="color:red;">Productos Stock Bajo: {{ bajo_stock }}</p>
+</div>
+
+<div class="filtros">
+  <form method="get" action="/">
+    <input type="text" name="filtro" value="{{ filtro }}" placeholder="Buscar...">
+    <select name="categoria">
+      {% for c in categorias %}
+      <option value="{{ c }}" {% if c == categoria %}selected{% endif %}>{{ c }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+  </form>
+</div>
+
+<div class="tabla">
+  <table border="1">
+    <tr><th>ID</th><th>Nombre</th><th>Cantidad</th><th>Precio</th><th>Categoría</th><th>Acciones</th></tr>
+    {% for p in productos %}
+    <tr {% if p['cantidad'] < 5 %} style="background:#FFCDD2;" {% endif %}>
+      <td>{{ p['id'] }}</td>
+      <td>{{ p['nombre_producto'] }}</td>
+      <td>{{ p['cantidad'] }}</td>
+      <td>{{ p['precio'] }}</td>
+      <td>{{ p['categoria'] }}</td>
+      <td>
+        <form style="display:inline;" method="post" action="/eliminar/{{ p['id'] }}">
+          <button type="submit">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<h2>Agregar Producto</h2>
+<form method="post" action="/agregar">
+  Nombre: <input type="text" name="nombre" required>
+  Cantidad: <input type="number" name="cantidad" min="0" required>
+  Precio: <input type="number" name="precio" step="0.01" min="0" required>
+  Categoría: <input type="text" name="categoria" required>
+  <button type="submit">Agregar</button>
+</form>
+
+<h2>Gráficas</h2>
+<img src="{{ grafica_url }}" alt="Gráficas">
+
+<br>
+<a href="/exportar">Exportar CSV</a>
+
+</body>
+</html>
