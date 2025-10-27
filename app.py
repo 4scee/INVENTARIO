@@ -4,11 +4,15 @@ import csv
 import io
 import matplotlib.pyplot as plt
 import base64
+import os
 
-app = Flask(__name__)
 STOCK_BAJO = 5
-
 DB_PATH = "inventario.db"
+
+# Configurar Flask para usar la raíz como carpeta de templates y static
+app = Flask(__name__,
+            template_folder=os.getcwd(),  # templates en la raíz
+            static_folder=os.getcwd())    # static en la raíz
 
 # ---------------- Funciones ----------------
 def get_db_connection():
@@ -153,3 +157,4 @@ def exportar():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
